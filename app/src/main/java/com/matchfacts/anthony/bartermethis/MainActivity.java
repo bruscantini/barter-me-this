@@ -1,5 +1,6 @@
 package com.matchfacts.anthony.bartermethis;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
@@ -10,8 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+
+    Button btnViewProducts;
+    Button btnNewProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +25,35 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        // Buttons
+        btnViewProducts = (Button) findViewById(R.id.btnViewProducts);
+        btnNewProduct = (Button) findViewById(R.id.btnCreateProduct);
+
+        // view products click event
+        btnViewProducts.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // Launching All products Activity
+                Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
+                startActivity(i);
+
             }
         });
 
-        SystemClock.sleep(3000);
+        // view products click event
+        btnNewProduct.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                // Launching create new product activity
+                Intent i = new Intent(getApplicationContext(), NewProductActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+        SystemClock.sleep(1000);
     }
 
     @Override
