@@ -25,4 +25,38 @@
         android:text="Add New Products"
         android:layout_marginTop="25dip"/>
 
+    <!-- Button to see my first picture -->
+    <Button android:id="@+id/btnSeeImage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="See My Image"
+        android:layout_marginTop="25dip"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/lbl_name"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13dp" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dip"
+        android:background="@color/btn_logut_bg"
+        android:text="@string/action_logout"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
+
+
+
 </LinearLayout>

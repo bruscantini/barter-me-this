@@ -6,4 +6,27 @@
     <string name="title_activity_all_products">All Products</string>
     <string name="title_activity_new_product">Add New Product</string>
     <string name="title_activity_edit_product">Edit Product</string>
+    <string name="title_activity_show_picture">ShowPicture</string>
+    <string name="title_activity_login">Welcome!</string>
+    <string name="title_activity_register">Register</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_fullname">Full Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Fullname</string>
+    <string name="action_login">Login</string>
+    <string name="action_register">Register</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_link_to_register">Don\'t have an account? Register here</string>
+    <string name="action_link_to_login">Already have an account? Go back</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
 </resources>
