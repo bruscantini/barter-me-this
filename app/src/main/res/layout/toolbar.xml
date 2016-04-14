@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <!-- This is a centered logo -->
+        <!--
+        <ImageView
+            android:id="@+id/toolbar_logo"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_gravity="center" />
+         -->
+
+        <!-- This is a custom left side button -->
+        <ImageButton
+            android:id="@+id/action_chest"
+            android:src="@drawable/ic_toys_white_24dp"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentLeft="true"
+            style="@style/Widget.AppCompat.ActionButton" />
+
+        <!-- This is a centered title -->
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@id/action_chest"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+            />
+
+        <ImageButton
+            android:id="@+id/action_camera"
+            android:src="@drawable/ic_camera_alt_white_24dp"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_toLeftOf="@+id/action_settings"
+            style="@style/Widget.AppCompat.ActionButton"
+            />
+
+
+        <!-- This is a custom right side button -->
+        <ImageButton
+            android:id="@+id/action_settings"
+            android:src="@drawable/ic_settings_white_24dp"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentRight="true"
+            style="@style/Widget.AppCompat.ActionButton" />
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>

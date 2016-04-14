@@ -6,7 +6,7 @@
     <string name="title_activity_all_products">All Products</string>
     <string name="title_activity_new_product">Add New Product</string>
     <string name="title_activity_edit_product">Edit Product</string>
-    <string name="title_activity_show_picture">ShowPicture</string>
+    <string name="title_activity_show_picture">Show Picture</string>
     <string name="title_activity_login">Welcome!</string>
     <string name="title_activity_register">Register</string>
 
@@ -29,4 +29,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Action Bar strings -->
+    <string name="action_chest">Treasure Chest</string>
+    <string name="title_activity_home">Home Activity</string>
 </resources>

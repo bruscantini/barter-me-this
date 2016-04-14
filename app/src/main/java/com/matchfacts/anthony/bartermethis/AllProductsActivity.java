@@ -19,6 +19,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -27,7 +29,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class AllProductsActivity extends ListActivity {
+public class AllProductsActivity extends AppCompatActivity {
+
+    //Activity's ListView
+    ListView lv;
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -53,8 +58,8 @@ public class AllProductsActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_products);
-        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // Hashmap for ListView
         productsList = new ArrayList<HashMap<String, String>>();
@@ -63,7 +68,7 @@ public class AllProductsActivity extends ListActivity {
         new LoadAllProducts().execute();
 
         // Get listview
-        ListView lv = getListView();
+        lv = (ListView) findViewById(android.R.id.list);
 
         // on seleting single product
         // launching Edit Product Screen
@@ -86,6 +91,28 @@ public class AllProductsActivity extends ListActivity {
                 startActivityForResult(in, 100);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     // Response from Edit Product Activity
@@ -196,7 +223,7 @@ public class AllProductsActivity extends ListActivity {
                             TAG_NAME},
                             new int[] { R.id.pid, R.id.name });
                     // updating listview
-                    setListAdapter(adapter);
+                    lv.setAdapter(adapter);
                 }
             });
 
