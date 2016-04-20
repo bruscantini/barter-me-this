@@ -9,11 +9,11 @@ import android.app.ProgressDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -24,9 +24,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.matchfacts.anthony.bartermethis.R;
+import com.matchfacts.anthony.app.AppRequestQueue;
 import com.matchfacts.anthony.app.AppConfig;
-import com.matchfacts.anthony.app.AppController;
 import com.matchfacts.anthony.helper.SessionManager;
 import com.matchfacts.anthony.helper.SQLiteHandler;
 
@@ -108,6 +107,8 @@ public class LoginActivity extends AppCompatActivity {
      * function to verify login details in mysql db
      * */
     private void checkLogin(final String email, final String password) {
+        RequestQueue rq = AppRequestQueue.getInstance(this.getApplicationContext()).getRequestQueue();
+
         // Tag used to cancel the request
         String tag_string_req = "req_login";
 
@@ -136,13 +137,14 @@ public class LoginActivity extends AppCompatActivity {
                         String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
+                        String firstName = user.getString("firstName");
+                        String lastName = user.getString("lastName");
                         String email = user.getString("email");
                         String created_at = user
                                 .getString("created_at");
 
                         // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
+                        db.addUser(firstName + " " + lastName, email, uid, created_at);
 
                         // Launch Home activity
                         Intent intent = new Intent(LoginActivity.this,
@@ -184,9 +186,11 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         };
+        strReq.setTag(tag_string_req);
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        //AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        AppRequestQueue.getInstance(this).addToRequestQueue(strReq);
     }
 
     private void showDialog() {

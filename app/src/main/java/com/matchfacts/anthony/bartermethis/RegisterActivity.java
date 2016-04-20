@@ -22,9 +22,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.matchfacts.anthony.bartermethis.R;
+import com.matchfacts.anthony.app.AppRequestQueue;
 import com.matchfacts.anthony.app.AppConfig;
-import com.matchfacts.anthony.app.AppController;
 import com.matchfacts.anthony.helper.SQLiteHandler;
 import com.matchfacts.anthony.helper.SessionManager;
 
@@ -33,7 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Button btnRegister;
     private Button btnLinkToLogin;
-    private EditText inputFullName;
+    private EditText inputFirstName;
+    private EditText inputLastName;
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
@@ -47,7 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        inputFullName = (EditText) findViewById(R.id.name);
+        inputFirstName = (EditText) findViewById(R.id.firstName);
+        inputLastName = (EditText) findViewById(R.id.lastName);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         btnRegister = (Button) findViewById(R.id.btnRegister);
@@ -75,12 +76,13 @@ public class RegisterActivity extends AppCompatActivity {
         // Register Button Click event
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String name = inputFullName.getText().toString().trim();
+                String firstName = inputFirstName.getText().toString().trim();
+                String lastName = inputLastName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
+                if (!firstName.isEmpty() && !lastName.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+                    registerUser(firstName, lastName, email, password);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
@@ -102,10 +104,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * Function to store user in MySQL database will post params(tag, name,
-     * email, password) to register url
+     * Function to store user in MySQL database will post params(tag, firstName,
+     * lastName, email, password) to register url
      * */
-    private void registerUser(final String name, final String email,
+    private void registerUser(final String firstName, final String lastName, final String email,
                               final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
@@ -130,13 +132,14 @@ public class RegisterActivity extends AppCompatActivity {
                         String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
+                        String firstName = user.getString("firstName");
+                        String lastName = user.getString("lastName");
                         String email = user.getString("email");
                         String created_at = user
                                 .getString("created_at");
 
                         // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
+                        db.addUser(firstName + lastName, email, uid, created_at);
 
                         Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
@@ -174,7 +177,8 @@ public class RegisterActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("name", name);
+                params.put("firstName", firstName);
+                params.put("lastName", lastName);
                 params.put("email", email);
                 params.put("password", password);
 
@@ -182,9 +186,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
         };
+        strReq.setTag(tag_string_req);
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        // AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        AppRequestQueue.getInstance(this).addToRequestQueue(strReq);
     }
 
     private void showDialog() {

@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         // Buttons
         btnViewProducts = (Button) findViewById(R.id.btnViewProducts);
         btnNewProduct = (Button) findViewById(R.id.btnCreateProduct);
-        btnSeeImage = (Button) findViewById(R.id.btnSeeImage);
 
         // view products click event
         btnViewProducts.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Launching All products Activity
-                Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
-                startActivity(i);
+                // Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
+                // startActivity(i);
 
             }
         });
@@ -68,19 +67,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Launching create new product activity
-                Intent i = new Intent(getApplicationContext(), NewProductActivity.class);
-                startActivity(i);
+                // Intent i = new Intent(getApplicationContext(), NewProductActivity.class);
+                // startActivity(i);
 
-            }
-        });
-
-        btnSeeImage.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                // Launching create new product activity
-                Intent i = new Intent(getApplicationContext(), ShowPictureActivity.class);
-                startActivity(i);
             }
         });
 

@@ -21,6 +21,8 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.matchfacts.anthony.app.AppConfig;
+
 public class EditProductActivity extends AppCompatActivity {
 
     EditText txtName;
@@ -37,15 +39,6 @@ public class EditProductActivity extends AppCompatActivity {
 
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
-
-    // single product url
-    private static final String url_product_detials = "http://matchfacts.asuscomm.com:8888/android_connect/get_product_details.php";
-
-    // url to update product
-    private static final String url_update_product = "http://matchfacts.asuscomm.com:8888/android_connect/update_product.php";
-
-    // url to delete product
-    private static final String url_delete_product = "http://matchfacts.asuscomm.com:8888/android_connect/delete_product.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -128,7 +121,7 @@ public class EditProductActivity extends AppCompatActivity {
             // getting product details by making HTTP request
             // Note that product details url will use GET request
             JSONObject json = jsonParser.makeHttpRequest(
-                    url_product_detials, "GET", params);
+                    AppConfig.URL_PRODUCT_DETAILS, "GET", params);
 
             // check your log for json response
             Log.d("Single Product Details", json.toString());
@@ -230,7 +223,7 @@ public class EditProductActivity extends AppCompatActivity {
 
             // sending modified data through http request
             // Notice that update product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_update_product,
+            JSONObject json = jsonParser.makeHttpRequest(AppConfig.URL_UPDATE_PRODUCT,
                     "POST", params);
 
             // check json success tag
@@ -296,7 +289,7 @@ public class EditProductActivity extends AppCompatActivity {
 
                 // getting product details by making HTTP request
                 JSONObject json = jsonParser.makeHttpRequest(
-                        url_delete_product, "POST", params);
+                        AppConfig.URL_DELETE_PRODUCT, "POST", params);
 
                 // check your log for json response
                 Log.d("Delete Product", json.toString());

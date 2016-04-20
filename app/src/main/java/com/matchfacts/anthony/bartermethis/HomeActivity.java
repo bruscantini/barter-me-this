@@ -16,10 +16,20 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.matchfacts.anthony.app.AppRequestQueue;
+import com.matchfacts.anthony.helper.SQLiteHandler;
+import com.matchfacts.anthony.helper.SessionManager;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -27,6 +37,9 @@ public class HomeActivity extends AppCompatActivity {
     ImageView profilePic;
     private static String url_profilePic = "http://matchfacts.asuscomm.com:8888/" +
             "android_connect/pictures/robby.jpg";
+
+    private SQLiteHandler db;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +53,14 @@ public class HomeActivity extends AppCompatActivity {
 
         ImageButton chestButton = (ImageButton) findViewById(R.id.action_chest);
         chestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        ImageButton cameraButton = (ImageButton) findViewById(R.id.action_camera);
+        cameraButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
@@ -64,60 +85,52 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        new LoadMyPicture().execute();
-    }
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
 
-    public static Bitmap decodeRemoteBitmap(String urlString) throws MalformedURLException, IOException {
-        URL url = new URL(urlString);
-        InputStream inputStream = url.openStream();
-        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        return bitmap;
-    }
+        // session manager
+        session = new SessionManager(getApplicationContext());
 
-    class LoadMyPicture extends AsyncTask<String, String, String> {
-
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            /*
-            pDialog = new ProgressDialog(ShowPictureActivity.this);
-            pDialog.setMessage("Loading picture. Please wait...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-            */
+        if (!session.isLoggedIn()) {
+            logoutUser();
         }
 
-        protected String doInBackground(String... args){
-            profilePic = (ImageView) findViewById(R.id.img_profile_pic);
-            try {
-                inputImage = decodeRemoteBitmap(url_profilePic);
-            } catch (MalformedURLException m){
-                m.printStackTrace();
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
+        // Fetching user details from sqlite
+        HashMap<String, String> user = db.getUserDetails();
 
-            return null;
-        }
+        // example: String name = user.get("name");
 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all products
-            // pDialog.dismiss();
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    profilePic.setImageBitmap(inputImage);
-                }
-            });
-        }
+        final ImageView profilePicture = (ImageView) findViewById(R.id.img_profile_pic);
+
+        // Retrieves an image specified by the URL, displays it in the UI.
+        ImageRequest request = new ImageRequest(url_profilePic,
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap bitmap) {
+                        profilePicture.setImageBitmap(bitmap);
+                    }
+                }, 0, 0, null,
+                new Response.ErrorListener() {
+                    public void onErrorResponse(VolleyError error) {
+                        profilePicture.setImageResource(R.drawable.ic_insert_emoticon_white_24dp);
+                    }
+                });
+        // Access the RequestQueue through your singleton class.
+        AppRequestQueue.getInstance(this).addToRequestQueue(request);
     }
 
+    /**
+     * Logging out the user. Will set isLoggedIn flag to false in shared
+     * preferences Clears the user data from sqlite users table
+     * */
+    private void logoutUser() {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -29,6 +29,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.matchfacts.anthony.app.AppConfig;
+
 public class AllProductsActivity extends AppCompatActivity {
 
     //Activity's ListView
@@ -41,9 +43,6 @@ public class AllProductsActivity extends AppCompatActivity {
     JSONParser jParser = new JSONParser();
 
     ArrayList<HashMap<String, String>> productsList;
-
-    // url to get all products list
-    private static String url_all_products = "http://matchfacts.asuscomm.com:8888/android_connect/get_all_products.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -157,7 +156,7 @@ public class AllProductsActivity extends AppCompatActivity {
             //List<Pair<String, String>> params = new ArrayList<>(); We could use this to improve performance
             HashMap<String, String> params = new HashMap<String, String>();
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(AppConfig.URL_ALL_PRODUCTS, "GET", params);
 
             // Check your log cat for JSON response
             Log.d("All Products: ", json.toString());
