@@ -128,7 +128,10 @@ public class RegisterActivity extends AppCompatActivity {
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
                         // User successfully stored in MySQL
-                        // Now store the user in sqlite
+
+                        /*
+                        // Now store the user in sqlite ... why?
+                        // We already do this in LoginActivity after login.
                         String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
@@ -140,6 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         // Inserting row in users table
                         db.addUser(firstName + " " + lastName, email, uid, created_at);
+                        */
 
                         Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
