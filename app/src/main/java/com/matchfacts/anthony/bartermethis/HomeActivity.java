@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.matchfacts.anthony.app.AppConfig;
 import com.matchfacts.anthony.app.AppRequestQueue;
 import com.matchfacts.anthony.helper.SQLiteHandler;
 import com.matchfacts.anthony.helper.SessionManager;
@@ -35,8 +36,6 @@ public class HomeActivity extends AppCompatActivity {
 
     Bitmap inputImage;
     ImageView profilePic;
-    private static String url_profilePic = "http://matchfacts.asuscomm.com:8888/" +
-            "android_connect/pictures/robby.jpg";
 
     private SQLiteHandler db;
     private SessionManager session;
@@ -97,8 +96,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Fetching user details from sqlite
         HashMap<String, String> user = db.getUserDetails();
-
-        // example: String name = user.get("name");
+        String url_profilePic =  AppConfig.URL_USERS + user.get("uid") + "/profile_pic.jpg";
 
         final ImageView profilePicture = (ImageView) findViewById(R.id.img_profile_pic);
 
