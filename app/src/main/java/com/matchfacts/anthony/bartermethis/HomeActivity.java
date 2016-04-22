@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.matchfacts.anthony.app.AppConfig;
 import com.matchfacts.anthony.app.AppRequestQueue;
 import com.matchfacts.anthony.helper.SQLiteHandler;
 import com.matchfacts.anthony.helper.SessionManager;
@@ -32,11 +33,6 @@ import java.net.URL;
 import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
-
-    Bitmap inputImage;
-    ImageView profilePic;
-    private static String url_profilePic = "http://matchfacts.asuscomm.com:8888/" +
-            "android_connect/pictures/robby.jpg";
 
     private SQLiteHandler db;
     private SessionManager session;
@@ -99,20 +95,22 @@ public class HomeActivity extends AppCompatActivity {
         HashMap<String, String> user = db.getUserDetails();
 
         // example: String name = user.get("name");
+        String url_profilePic = AppConfig.URL_USERS +
+                user.get("uid") + "/profile_pic.jpg";
 
-        final ImageView profilePicture = (ImageView) findViewById(R.id.img_profile_pic);
+        final ImageView profilePic = (ImageView) findViewById(R.id.img_profile_pic);
 
         // Retrieves an image specified by the URL, displays it in the UI.
         ImageRequest request = new ImageRequest(url_profilePic,
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
-                        profilePicture.setImageBitmap(bitmap);
+                        profilePic.setImageBitmap(bitmap);
                     }
                 }, 0, 0, null,
                 new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                        profilePicture.setImageResource(R.drawable.ic_insert_emoticon_white_24dp);
+                        profilePic.setImageResource(R.drawable.ic_insert_emoticon_white_24dp);
                     }
                 });
         // Access the RequestQueue through your singleton class.
