@@ -34,9 +34,6 @@ import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Bitmap inputImage;
-    ImageView profilePic;
-
     private SQLiteHandler db;
     private SessionManager session;
 
