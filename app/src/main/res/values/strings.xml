@@ -34,4 +34,5 @@
     <!-- Action Bar strings -->
     <string name="action_chest">Treasure Chest</string>
     <string name="title_activity_home">Home Activity</string>
+    <string name="title_activity_camera">CameraActivity</string>
 </resources>
