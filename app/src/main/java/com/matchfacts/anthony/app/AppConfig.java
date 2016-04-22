@@ -20,6 +20,6 @@ public class AppConfig {
     // url to delete product
     public static final String URL_DELETE_PRODUCT = HOST + "android_connect/delete_product.php";
     // users folder
-    public static final String URL_USERS = HOST + "barter-me-that/users";
+    public static final String URL_USERS = HOST + "barter-me-that/users/";
 
 }
